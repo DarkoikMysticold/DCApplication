@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd
+http://www.liquibase.org/xml/ns/pro
+http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd">
+    <changeSet id="101" author="Anton Prokhorov">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="cities"/>
+                <tableExists tableName="distance"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cities">
+            <column name="id" type="int">
+                <constraints primaryKey="true" primaryKeyName="city_id_pk" />
+            </column>
+            <column name="cityName" type="varChar(50)">
+                <constraints unique="true" uniqueConstraintName="city_name_unq" />
+            </column>
+            <column name="latitude" type="decimal(10,8)" />
+            <column name="longitude" type="decimal(10,8)" />
+        </createTable>
+        <createTable tableName="distance">
+            <column name="id" type="int">
+                <constraints primaryKey="true" primaryKeyName="distance_id_pk" />
+            </column>
+            <column name="fromCity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="toCity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="int unsigned" />
+        </createTable>
+        <addAutoIncrement tableName="cities" columnName="id" columnDataType="int" startWith="1" incrementBy="1" />
+        <createSequence sequenceName="hibernate_sequence" incrementBy="1" startValue="1" />
+        <addForeignKeyConstraint baseTableName="distance" baseColumnNames="fromCity" constraintName="from_city_id" referencedTableName="cities" referencedColumnNames="id" />
+        <addForeignKeyConstraint baseTableName="distance" baseColumnNames="toCity" constraintName="to_city_id" referencedTableName="cities" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>

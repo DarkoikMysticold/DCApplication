@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+<body>
+<a href="all">Show cities</a><br/><br/>
+
+<form method="POST" enctype="multipart/form-data" action="/calculate">
+    Name city 1: <input type="text" name="cityname1"><br/><br/>
+    Name city 2: <input type="text" name="cityname2"><br/><br/>
+    Method <input type="text" name="method"> <br/><br/>
+    <input type="submit" value="Calculate"> Press here to calculate distance!
+</form>
+
+<form method="POST" enctype="multipart/form-data" action="/upload">
+    File to upload: <input type="file" name="file"><br />
+    <input type="submit" value="Upload"> Press here to upload the file!
+</form>
+</body>
+</html>
